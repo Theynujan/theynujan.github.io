@@ -82,6 +82,13 @@
     if (img.complete) { img.naturalWidth > 0 ? showPhoto() : hidePhoto(); }
   }
 
+  /* ----- Project images: if a file is missing, keep the pattern placeholder ----- */
+  doc.querySelectorAll('.plate img').forEach(function (im) {
+    var drop = function () { im.remove(); };
+    im.addEventListener('error', drop);
+    if (im.complete && im.naturalWidth === 0 && im.currentSrc) drop();
+  });
+
   /* ----- Footer year ----- */
   var year = doc.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
